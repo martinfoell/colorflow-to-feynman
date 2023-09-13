@@ -65,13 +65,103 @@ int main()
       A(particle_index[cf2[i+1]],particle_index[cf2[i]]) = -1;
     }
     
+    // Specify the row you want to iterate over (e.g., row 1)
+    size_t targetRow = 0;
+    string target = particles[targetRow];
+
+    // string key1;
+    // string key2;
+    
+    // if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
+    //   key1 = "cf1";
+    // }
+    // else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
+    //   key1 = "cf2";
+    // }
+    
+    // if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
+    //   key2 = "cf1";
+    // }
+    // else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
+    //   key2 = "cf2";
+    // }
+
+    // std::cout << "key = " << key1 << std::endl;
+    // Define the value you want to find
+    int targetValue = 0;
+
+    // Search for the key associated with the target value
+    std::string foundKey = "";
+
+    for (const auto& pair : particle_index) {
+        if (pair.second == targetValue) {
+            foundKey = pair.first;
+            break; // Exit the loop once the key is found
+        }
+    }
+
+
+    // Get the number of columns in the matrix
+    size_t numCols = A.n_cols;
+    size_t numRows = A.n_rows;
+    std::vector<int> tt;
+    // string key1;
+    // string key2;
+
+    // Check if the target row is valid
+    // Iterate over the elements in the specified row
+    std::string key1;
+    std::string key2;
+
+
+    for (size_t col = 0; col < numCols; ++col) {
+        if (A(targetRow, col) == 1.0) {
+            int targetCol = col;
+	    std::cout << "targetCol = " << targetCol << std::endl;
+            for (size_t col = 0; col < numCols; ++col) {
+                if (A(targetCol, col) == -1) {
+                    std::cout << col << std::endl;
+		    string target = particles[targetRow];
+		    string target2 = particles[col];
+		    
+		    string key1;
+		    string key2;
+    
+		    if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
+		      key1 = "cf1";
+		    }
+		    else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
+		      key1 = "cf2";
+		    }
+
+		    if (std::find(cf1.begin(), cf1.end(), target2) != cf1.end()) {
+		      key2 = "cf1";
+		    }
+		    else if (std::find(cf2.begin(), cf2.end(), target2) != cf2.end()) {
+		      key2 = "cf2";
+		    }
+		    if (key1 != key2) {
+		      A(targetRow, col) = -1;
+		      A(col, targetRow) = 1;}
+                    std::cout << "key1 = " << key1 << std::endl;
+                    std::cout << "key2 = " << key2 << std::endl;
+                }
+            }
+        }
+    }
+      
+    
+
+    for (int i: tt)
+      std::cout << i << ' ';
+
+    std::cout << std::endl;
     std::cout << A << std::endl;
 
     for (string i: particles)
       std::cout << i << ' ';
 
-    std::cout << in.size() << std::endl;
-    // std::cout << inter.size() << std::endl;
-    // std::cout << out.size() << std::endl;
+
+    std::cout <<  std::endl;
   return 0;
   }
