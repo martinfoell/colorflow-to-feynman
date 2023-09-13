@@ -1,6 +1,23 @@
 #include "../include/matrix.hpp"
 
 
+arma::imat Matrix(std::vector<std::string> particles) {
+  int n = particles.size();
+  arma::imat matrix = arma::imat(n, n, arma::fill::zeros);
+  // arma::imat matrix = arma::imat(n, n); //Initialize matrix but don't fill.
+  return matrix;
+}
+
+
+void fillMatrix(arma::imat &matrix, std::map<std::string, int> particle_index, std::vector<std::string> cf) {
+    for (size_t i = 0; i < cf.size()-1; ++i) {
+      matrix(particle_index[cf[i]],particle_index[cf[i+1]]) = 1;
+      matrix(particle_index[cf[i+1]],particle_index[cf[i]]) = -1;
+    }
+}
+
+
+
 // Function to find triangles in a graph represented by an Armadillo imat
 void findTriangles(const arma::imat& adjacencyMatrix) {
     int numNodes = adjacencyMatrix.n_rows;

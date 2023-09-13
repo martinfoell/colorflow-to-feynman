@@ -32,27 +32,21 @@ int main()
 
     
     // Print the first characters
-    std::cout << "First characters:" << std::endl;
-    for (std::string c : quarks) {
-        std::cout << c << " ";
-	// std::cout << particle_index[c] << " ";
-    }
-    std::cout << std::endl;
+//     std::cout << "First characters:" << std::endl;
+//     for (std::string c : quarks) {
+//         std::cout << c << " ";
+// 	// std::cout << particle_index[c] << " ";
+// n    }
+//     std::cout << std::endl;
     
 
-    arma::imat A = arma::imat(n, n); //Initialize matrix but don't fill.
+    // arma::imat A = arma::imat(n, n); //Initialize matrix but don't fill.
+    arma::imat A = Matrix(particles);
     size_t numCols = A.n_cols;
     size_t numRows = A.n_rows;
     
-    for (size_t i = 0; i < cf1.size()-1; ++i) {
-      A(particle_index[cf1[i]],particle_index[cf1[i+1]]) = 1;
-      A(particle_index[cf1[i+1]],particle_index[cf1[i]]) = -1;
-    }
-
-    for (size_t i = 0; i < cf2.size()-1; ++i) {
-      A(particle_index[cf2[i]],particle_index[cf2[i+1]]) = 1;
-      A(particle_index[cf2[i+1]],particle_index[cf2[i]]) = -1;
-    }
+    fillMatrix(A, particle_index, cf1);
+    fillMatrix(A, particle_index, cf2);
     
     // Specify the row you want to iterate over (e.g., row 1)
     // size_t targetRow = 0;
