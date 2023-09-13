@@ -6,14 +6,6 @@
 #include "../include/particles.hpp"
 
 
-// std::map<std::string, int> Particles_index(std::vector<std::string> particles) {
-//   std::map<std::string, int> particle_index;
-//   for (size_t i = 0; i < particles.size(); ++i) {
-//     particle_index[particles[i]] = i;
-//   }
-//   return particle_index;
-// }
-
 int main()
   {
     std::vector<std::string> in = {"q1", "Q2"};
@@ -32,36 +24,11 @@ int main()
 
     std::map<std::string, int> particle_index = Particles_index(particles);
     
-    // std::map<std::string, int> particle_index;
-    // for (size_t i = 0; i < particles.size(); ++i) {
-    //   particle_index[particles[i]] = i;
-    // }
+    std::vector<std::string> quarks = Quarks(particles);
 
-    // std::vector<std::string> quarks;
+    std::map<std::string, int> quark_index = Quarks_index(quarks, particle_index);
 
-    std::vector<std::string> quarks;
 
-    // Iterate through the vector and extract the first character from each string
-    for (const std::string& str : particles) {
-        if (!str.empty()) { // Make sure the string is not empty
-	  if(str[0] == 'q' || str[0] == 'Q'){
-            quarks.push_back(str);}
-        }
-    }
-
-    std::map<std::string, int> quark_index;
-    for (size_t i = 0; i < quarks.size(); i++) {
-      quark_index[quarks[i]] = particle_index[quarks[i]];
-    }
-
-    // std::cout << "quark_index = " << quark_index["q1"] << std::endl;
-    // std::cout << "quark_index = " << quark_index["Q2"] << std::endl;
-    // std::cout << "quark_index = " << quark_index["q3"] << std::endl;
-    // std::cout << "quark_index = " << quark_index["Q4"] << std::endl;
-
-    // for (size_t i = 0; i < quarks.size(); i++) {
-    //   std::cout << "quarks = " << quark_index[quarks[i]] << std::endl;
-    // }
 
     
     // Print the first characters
@@ -71,13 +38,6 @@ int main()
 	// std::cout << particle_index[c] << " ";
     }
     std::cout << std::endl;
-    
-
-    // std::cout << "particle_index[\"q1\"] = " << particle_index["q1"] << std::endl;
-    // std::cout << "particle_index[\"g\"] = " << particle_index["g"] << std::endl;
-    // std::cout << "particle_index[\"Q2\"] = " << particle_index["Q2"] << std::endl;
-    // std::cout << "particle_index[\"q3\"] = " << particle_index["q3"] << std::endl;
-    // std::cout << "particle_index[\"Q4\"] = " << particle_index["Q4"] << std::endl;
     
 
     arma::imat A = arma::imat(n, n); //Initialize matrix but don't fill.
@@ -165,4 +125,16 @@ int main()
     std::cout <<  std::endl;
   return 0;
   }
+
+
+    // std::cout << "quark_index = " << quark_index["q1"] << std::endl;
+    // std::cout << "quark_index = " << quark_index["Q2"] << std::endl;
+    // std::cout << "quark_index = " << quark_index["q3"] << std::endl;
+    // std::cout << "quark_index = " << quark_index["Q4"] << std::endl;
+
+    // std::cout << "particle_index[\"q1\"] = " << particle_index["q1"] << std::endl;
+    // std::cout << "particle_index[\"g\"] = " << particle_index["g"] << std::endl;
+    // std::cout << "particle_index[\"Q2\"] = " << particle_index["Q2"] << std::endl;
+    // std::cout << "particle_index[\"q3\"] = " << particle_index["q3"] << std::endl;
+    // std::cout << "particle_index[\"Q4\"] = " << particle_index["Q4"] << std::endl;
 
