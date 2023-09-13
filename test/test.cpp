@@ -4,6 +4,27 @@
 using namespace std;
 using namespace arma;
 
+// Function to find triangles in a graph represented by an Armadillo imat
+void findTriangles(const arma::imat& adjacencyMatrix) {
+    int numNodes = adjacencyMatrix.n_rows;
+
+    // Loop through each node in the graph
+    for (int i = 0; i < numNodes; i++) {
+        for (int j = i + 1; j < numNodes; j++) {
+            if (adjacencyMatrix(i, j)) {  // If there is an edge between nodes i and j
+                // Check for a third node k that forms a triangle with nodes i and j
+                for (int k = j + 1; k < numNodes; k++) {
+                    if (adjacencyMatrix(i, k) && adjacencyMatrix(j, k)) {
+                        // Nodes i, j, and k form a triangle
+                        std::cout << "Triangle found: " << i << " " << j << " " << k << std::endl;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 int main()
   {
     std::vector<std::string> in = {"q1", "Q2"};
@@ -99,7 +120,8 @@ int main()
             break; // Exit the loop once the key is found
         }
     }
-
+    std::cout << "foundKey = " << foundKey << std::endl;
+    
     for (size_t i = 0; i < quarks.size(); i++) {
       int targetRow =  quark_index[quarks[i]];
       std::cout << "targetRow = " << targetRow << std::endl;
@@ -142,53 +164,15 @@ int main()
     }
 
 
-    // Check if the target row is valid
-    // Iterate over the elements in the specified row
-
-    // for (size_t col = 0; col < numCols; ++col) {
-    //     if (A(targetRow, col) == 1.0) {
-    //         int targetCol = col;
-    // 	    std::cout << "targetCol = " << targetCol << std::endl;
-    //         for (size_t col = 0; col < numCols; ++col) {
-    //             if (A(targetCol, col) == -1) {
-    //                 std::cout << col << std::endl;
-    // 		    string target = particles[targetRow];
-    // 		    string target2 = particles[col];
-		    
-    // 		    string key1;
-    // 		    string key2;
-    
-    // 		    if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
-    // 		      key1 = "cf1";
-    // 		    }
-    // 		    else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
-    // 		      key1 = "cf2";
-    // 		    }
-
-    // 		    if (std::find(cf1.begin(), cf1.end(), target2) != cf1.end()) {
-    // 		      key2 = "cf1";
-    // 		    }
-    // 		    else if (std::find(cf2.begin(), cf2.end(), target2) != cf2.end()) {
-    // 		      key2 = "cf2";
-    // 		    }
-    // 		    if (key1 != key2) {
-    // 		      A(targetRow, col) = -1;
-    // 		      A(col, targetRow) = 1;}
-    //                 std::cout << "key1 = " << key1 << std::endl;
-    //                 std::cout << "key2 = " << key2 << std::endl;
-    //             }
-    //         }
-    //     }
-    // }
-      
-    
     std::cout << std::endl;
     std::cout << A << std::endl;
+    arma::imat absA = arma::abs(A);
+    std::cout << absA << std::endl;
 
     for (string i: particles)
       std::cout << i << ' ';
-
-
+    std::cout <<  std::endl;
+    findTriangles(absA);
     std::cout <<  std::endl;
   return 0;
   }
