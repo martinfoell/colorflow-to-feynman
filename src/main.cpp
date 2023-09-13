@@ -5,7 +5,7 @@
 #include "../include/matrix.hpp"
 #include "../include/particles.hpp"
 #include "../include/readfile.hpp"
-
+#include <cstring>
 void printVector(std::vector<std::string> v) {
   std::string result;
   for (size_t i = 0; i < v.size(); ++i) {
@@ -31,12 +31,25 @@ void addParticlesFromFile(std::string filename, std::string vectorname, std::vec
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
-        return 1; // Return an error code
-    }
+    // if (argc != 2) {
+    //   std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
+    //   return 1; // Return an error code
+    // }
 
-    std::string filename = argv[1];
+    bool printFlag = false;
+    bool latexFlag = false;
+    
+    std::string filename;
+
+    // Loop through the command-line arguments
+    for (int i = 1; i < argc; ++i) {
+        if (strcmp(argv[i], "-p") == 0) {
+            printFlag = true;
+        } else {
+            filename = argv[i];
+        }
+    }    
+    // std::string filename = argv[1];
     // std::string filename = "../example.txt"; // Replace with your file's name
 
     std::vector<std::string> in;
@@ -79,14 +92,17 @@ int main(int argc, char* argv[]) {
     
     arma::imat A = Matrix(particles);
     
-    std::cout << " " << std::endl;
-    printParticles("incomming particlse; ", in);
-    printParticles("intermediate particlse: ", inter);
-    printParticles("outgoing particlse: ", out);
-    std::cout << "Total particels in Feyman diagram: " << particles.size() << std::endl;
-    std::cout << " " << std::endl;
-    printColorFlows(cfVectors);
-    std::cout << " " << std::endl;
+    if (printFlag) {
+	std::cout << " " << std::endl;
+	printParticles("incomming particlse; ", in);
+	printParticles("intermediate particlse: ", inter);
+	printParticles("outgoing particlse: ", out);
+	std::cout << "Total particels in Feyman diagram: " << particles.size() << std::endl;
+	std::cout << " " << std::endl;
+	printColorFlows(cfVectors);
+	std::cout << " " << std::endl;
+    }
+
     addColorFlow(A, particle_index, cfVectors);
     addGluonFlow(A, particles, quarks, quark_index, cfVectors, findColorflow);
 
@@ -95,6 +111,7 @@ int main(int argc, char* argv[]) {
     std::cout << " " << std::endl;
     findVertices(absA, vertices, particle_index, findParticle);
 
+    std::cout << vertices.size() << " vertices found." << std::endl;
     
     // std::cout << absA << std::endl;
 

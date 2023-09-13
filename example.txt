@@ -1,13 +1,5 @@
-in = q1,q2
-inter =  q7,g8,q9
-out = g3,q4,q5,g6
-cf1 = q1,g8,q9,g6
-cf2 = q2,g8,q7,g3
-cf3 = g3,q4
-cf4 = g6,q5
-
-
-
-
-
-
+in = q1, Q2
+inter = g
+out = q3, Q4
+cf1 = q1, g, Q2
+cf2 = Q4, g, q3
