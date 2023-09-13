@@ -110,3 +110,51 @@ void findTriangles(const arma::imat& adjacencyMatrix) {
     }
 }
 
+std::string findParticle(std::map<std::string, int>  particle_index, int targetValue) {
+    // Search for the key associated with the target value
+    std::string particle = "";
+
+    for (const auto& pair : particle_index) {
+        if (pair.second == targetValue) {
+            particle = pair.first;
+            break; // Exit the loop once the key is found
+        }
+    }
+    return particle;
+}
+
+void findVertices(const arma::imat& adjacencyMatrix, std::vector<std::vector<int>>& vertices, std::map<std::string, int>  particle_index, std::function<std::string(const std::map<std::string, int>, int)> findParticle) {
+    int numNodes = adjacencyMatrix.n_rows;
+
+    // Loop through each node in the graph
+    for (int i = 0; i < numNodes; i++) {
+        for (int j = i + 1; j < numNodes; j++) {
+            if (adjacencyMatrix(i, j)) {  // If there is an edge between nodes i and j
+                // Check for a third node k that forms a triangle with nodes i and j
+                for (int k = j + 1; k < numNodes; k++) {
+                    if (adjacencyMatrix(i, k) && adjacencyMatrix(j, k)) {
+                        // Nodes i, j, and k form a triangle
+                        std::vector<int> triangle = {i, j, k};
+                        vertices.push_back(triangle);
+                    }
+                }
+            }
+        }
+    }
+    // Print the vertices found
+    for (const std::vector<int>& vertex : vertices) {
+      std::string result;
+      for (size_t i = 0; i < vertex.size(); ++i) {
+	// result += std::to_string(vertex[i]); // Convert int to string before concatenation
+	result += findParticle(particle_index, vertex[i]);
+	if (i < vertex.size() - 1) {
+	  result += ", ";
+	}
+
+      }
+      std::cout << "vertex found: " << result << std::endl;
+    }
+
+}
+
+

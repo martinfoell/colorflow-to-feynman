@@ -5,6 +5,9 @@
 #include "../include/matrix.hpp"
 #include "../include/particles.hpp"
 
+
+    
+
 int main()
   {
     std::vector<std::string> in = {"q1", "Q2"};
@@ -29,30 +32,34 @@ int main()
     
     addColorFlow(A, particle_index, cfVectors);
     addGluonFlow(A, particles, quarks, quark_index, cfVectors, findColorflow);
-
-
-    // std::cout << std::endl;
-    // std::cout << A << std::endl;
+    
     arma::imat absA = arma::abs(A);
-    std::cout << absA << std::endl;
+    std::vector<std::vector<int>> vertices;
 
-    for (std::string i: particles)
-      std::cout << i << ' ';
-    std::cout <<  std::endl;
-    findTriangles(absA);
-    std::cout <<  std::endl;
-    int targetValue = 0;
+    findVertices(absA, vertices, particle_index, findParticle);
 
-    // Search for the key associated with the target value
-    std::string foundKey = "";
 
-    for (const auto& pair : particle_index) {
-        if (pair.second == targetValue) {
-            foundKey = pair.first;
-            break; // Exit the loop once the key is found
-        }
+    std::string result;
+    for (size_t i = 0; i < in.size(); ++i) {
+	// result += std::to_string(in[i]); // Convert int to string before concatenation
+      result += in[i];
+	if (i < in.size() - 1) {
+	  result += ", ";
+	}
+
     }
-    std::cout << "foundKey = " << foundKey << std::endl;
+    std::cout << "incomming particels: " << result << std::endl;
+    
+    
+
+    // for (std::string i: particles)
+    //   std::cout << i << ' ';
+    // std::cout <<  std::endl;
+    
+    // std::cout << absA << std::endl;
+
+
+
     
   return 0;
   }
@@ -115,3 +122,35 @@ int main()
     //     }
     //   }
     // }
+    // // Print the vertices found
+    // for (const std::vector<int>& vertex : vertices) {
+    //   std::string result;
+    //   	result += "( ";
+    //   for (size_t i = 0; i < vertex.size(); ++i) {
+    // 	// result += std::to_string(vertex[i]); // Convert int to string before concatenation
+    // 	result += findParticle(particle_index, vertex[i]);
+    // 	if (i < vertex.size() - 1) {
+    // 	  result += ", ";
+    // 	}
+
+    //   }
+    //   result += " )";
+    //   std::cout << "found vertex: " << result << std::endl;
+    // }
+
+    
+
+    // std::string found_particle = findParticle(particle_index, targetValue);
+
+    // std::cout << "found particle: " << found_particle << std::endl;
+    // // Search for the key associated with the target value
+    // std::string foundKey = "";
+
+    // for (const auto& pair : particle_index) {
+    //     if (pair.second == targetValue) {
+    //         foundKey = pair.first;
+    //         break; // Exit the loop once the key is found
+    //     }
+    // }
+    // std::cout << "foundKey = " << foundKey << std::endl;
+

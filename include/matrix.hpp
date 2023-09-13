@@ -15,3 +15,9 @@ void addGluonFlow(arma::imat &A, std::vector<std::string> particles, std::vector
   
 void findTriangles(const arma::imat& adjacencyMatrix);
 
+
+std::string findParticle(std::map<std::string, int>  particle_index, int targetValue);
+
+void findVertices(const arma::imat& adjacencyMatrix, std::vector<std::vector<int>>& vertices, std::map<std::string, int>  particle_index, std::function<std::string(const std::map<std::string, int>, int)> findParticle);
+  
+
