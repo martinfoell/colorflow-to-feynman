@@ -35,7 +35,7 @@ cf2 = Q4, g, q3
 
 | Input variable |     Description       |  Value  | Figure 1 |
 |----------------|-----------------------|---------|----------|
-| in		 |incomming particles    |  q1, Q2 | $q_1$, $\overline{q}_2|
+| in		 |incomming particles    |  q1, Q2 | $q_1$, $\overline{q}_2$|
 | inter		 |intermediate particles |  g      ||
 | out		 |outgiong particles     |    q3, Q4  |	|
 | cf1		 |     color flow 1      |  q1, g, Q2 ||
