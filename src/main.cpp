@@ -60,26 +60,36 @@ int main()
     std::cout << "foundKey = " << foundKey << std::endl;
     
     for (size_t i = 0; i < quarks.size(); i++) {
-      int targetRow =  quark_index[quarks[i]];
+      // index and name of the quark
       int quark1_index =  quark_index[quarks[i]];
-      std::cout << "targetRow = " << targetRow << std::endl;
+      std::string quark1 = particles[quark1_index];
+
+      //loop over the particels
       for (size_t col = 0; col < numCols; ++col) {
-        if (A(quark1_index, col) == 1.0) {
-	  int targetCol = col;
-	  std::cout << "targetCol = " << targetCol << std::endl;
+        // check if incomming quark to a gluon is in the column
+        if (A(quark1_index, col) == 1) {
+	  
+	  int gluon_index = col;
+	  std::string gluon = particles[gluon_index];
+
 	  for (size_t col = 0; col < numCols; ++col) {
-	    if (A(col, targetCol) == -1) {
-	      // int targetCol
-	      std::cout << col << std::endl;
+	    
+	    // check if outgoing quark from a gluon is in the column
+	    if (A(col, gluon_index) == -1) {
 	      
+	      int quark2_index = col;
+	      std::string quark2 = particles[quark2_index];
+	      
+	      // find the color flow of the quark
 	      std::string colorflow1 = findColorflow( cf1, cf2, particles, quark1_index);
-	      std::string colorflow2 = findColorflow( cf1, cf2, particles, col);
+	      std::string colorflow2 = findColorflow( cf1, cf2, particles, quark2_index);
+	      //check if the quarks are in different color flows
 	      if (colorflow1 != colorflow2) {
-		A(targetRow, col) = -1;
-		A(col, targetRow) = -1;
-		std::cout << "A(" << targetRow << "," << col << ") = " << A(targetRow, col) << std::endl;
-		std::cout << "colorflow1 = " << colorflow1 << std::endl;
-		std::cout << "colorflow2 = " << colorflow2 << std::endl;}
+		// add a vertex between the quarks if they are in different color flows
+		A(quark1_index, quark2_index) = -1;
+		A(quark2_index, quark1_index) = -1;
+		std::cout << "gluon flow " << quark2 << " -> " << quark1 << " added" << std::endl;
+	      }
 	    }
 	  }
         }
