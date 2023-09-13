@@ -33,11 +33,17 @@ cf1 = q1, g, Q2
 cf2 = Q4, g, q3
 ```
 
-| Input variable |     Description       |  Value  | Figure 1 |
-|----------------|-----------------------|---------|----------|
-| in		 |incomming particles    |  q1, Q2 | $q_1$, $\overline{q}_2$|
-| inter		 |intermediate particles |  g      ||
-| out		 |outgiong particles     |    q3, Q4  |	|
-| cf1		 |     color flow 1      |  q1, g, Q2 ||
-| cf2		 |     color flow 2      |  Q4, g, q3 |	|
+| Input variable | Description            |  Value     | Figure 1                                       |
+|----------------|------------------------|------------|------------------------------------------------|
+| in		 | incomming particles    |  q1, Q2    | $q_1$, $\overline{q}_2$                        |
+| inter		 | intermediate particles |  g         | $g$                                            |
+| out		 | outgiong particles     |  q3, Q4    | $q_3$, $\overline{q}_4$                        |
+| cf1		 | color flow 1           |  q1, g, Q2 | $q_1 \rightarrow g \rightarrow \overline{q}_2$ |
+| cf2		 | color flow 2           |  Q4, g, q3 | $\overline{q}_4 \rightarrow g \rightarrow q_3$ |
+
+| Input particle | Description | 
+|----------------|-------------|
+| q		 | quark       |
+| Q 		 | anti-quark  |
+| g		 | gluon       |
 
