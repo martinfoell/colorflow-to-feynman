@@ -1,1 +1,1 @@
-![alt text](https://github.com/martinfoell/colorflow-tofeynman/blob/main/images/image.png)|
+![alt text](https://github.com/martinfoell/colorflow-to-feynman/blob/main/images/image.png)|
