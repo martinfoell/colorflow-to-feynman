@@ -5,6 +5,18 @@
 #include "../include/matrix.hpp"
 #include "../include/particles.hpp"
 
+std::string findColorflow(std::vector<std::string> cf1, std::vector<std::string> cf2, std::vector<std::string> particles, int targetRow) {
+  std::string colorflow = "";
+  std::string target = particles[targetRow];
+  if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
+    colorflow = "cf1";
+  }
+  else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
+    colorflow = "cf2";
+  }
+  return colorflow;
+}
+
 
 int main()
   {
@@ -12,13 +24,8 @@ int main()
     std::vector<std::string> inter= {"g"};
     std::vector<std::string> out= {"q3", "Q4"};
     
-    int n = in.size()+inter.size()+out.size();    
-    std::cout << "n = " << n << std::endl;
-    
-    // Create a new vector to store the concatenated strings
     std::vector<std::string> cf1 = {"q1", "g", "Q2"};
     std::vector<std::string> cf2 = {"Q4", "g", "q3"};
-
 
     std::vector<std::string> particles = Particles(in, inter, out);
 
@@ -27,20 +34,7 @@ int main()
     std::vector<std::string> quarks = Quarks(particles);
 
     std::map<std::string, int> quark_index = Quarks_index(quarks, particle_index);
-
-
-
     
-    // Print the first characters
-//     std::cout << "First characters:" << std::endl;
-//     for (std::string c : quarks) {
-//         std::cout << c << " ";
-// 	// std::cout << particle_index[c] << " ";
-// n    }
-//     std::cout << std::endl;
-    
-
-    // arma::imat A = arma::imat(n, n); //Initialize matrix but don't fill.
     arma::imat A = Matrix(particles);
     size_t numCols = A.n_cols;
     size_t numRows = A.n_rows;
@@ -67,39 +61,25 @@ int main()
     
     for (size_t i = 0; i < quarks.size(); i++) {
       int targetRow =  quark_index[quarks[i]];
+      int quark1_index =  quark_index[quarks[i]];
       std::cout << "targetRow = " << targetRow << std::endl;
       for (size_t col = 0; col < numCols; ++col) {
-        if (A(targetRow, col) == 1.0) {
+        if (A(quark1_index, col) == 1.0) {
 	  int targetCol = col;
 	  std::cout << "targetCol = " << targetCol << std::endl;
 	  for (size_t col = 0; col < numCols; ++col) {
 	    if (A(col, targetCol) == -1) {
+	      // int targetCol
 	      std::cout << col << std::endl;
-	      std::string target = particles[targetRow];
-	      std::string target2 = particles[col];
 	      
-	      std::string key1;
-	      std::string key2;
-	      
-	      if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
-		key1 = "cf1";
-	      }
-	      else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
-		key1 = "cf2";
-	      }
-	      
-	      if (std::find(cf1.begin(), cf1.end(), target2) != cf1.end()) {
-		key2 = "cf1";
-	      }
-	      else if (std::find(cf2.begin(), cf2.end(), target2) != cf2.end()) {
-		key2 = "cf2";
-	      }
-	      if (key1 != key2) {
+	      std::string colorflow1 = findColorflow( cf1, cf2, particles, quark1_index);
+	      std::string colorflow2 = findColorflow( cf1, cf2, particles, col);
+	      if (colorflow1 != colorflow2) {
 		A(targetRow, col) = -1;
 		A(col, targetRow) = -1;
 		std::cout << "A(" << targetRow << "," << col << ") = " << A(targetRow, col) << std::endl;
-		std::cout << "key1 = " << key1 << std::endl;
-		std::cout << "key2 = " << key2 << std::endl;}
+		std::cout << "colorflow1 = " << colorflow1 << std::endl;
+		std::cout << "colorflow2 = " << colorflow2 << std::endl;}
 	    }
 	  }
         }
@@ -132,3 +112,10 @@ int main()
     // std::cout << "particle_index[\"q3\"] = " << particle_index["q3"] << std::endl;
     // std::cout << "particle_index[\"Q4\"] = " << particle_index["Q4"] << std::endl;
 
+    // Print the first characters
+//     std::cout << "First characters:" << std::endl;
+//     for (std::string c : quarks) {
+//         std::cout << c << " ";
+// 	// std::cout << particle_index[c] << " ";
+// n    }
+//     std::cout << std::endl;
