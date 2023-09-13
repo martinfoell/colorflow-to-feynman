@@ -5,17 +5,33 @@
 #include "../include/matrix.hpp"
 #include "../include/particles.hpp"
 
-std::string findColorflow(std::vector<std::string> cf1, std::vector<std::string> cf2, std::vector<std::string> particles, int targetRow) {
-  std::string colorflow = "";
-  std::string target = particles[targetRow];
-  if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
-    colorflow = "cf1";
-  }
-  else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
-    colorflow = "cf2";
-  }
-  return colorflow;
+// std::string findColorflow(std::vector<std::string> cf1, std::vector<std::string> cf2, std::vector<std::string> particles, int targetRow) {
+//   std::string colorflow = "";
+//   std::string target = particles[targetRow];
+//   if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
+//     colorflow = "cf1";
+//   }
+//   else if (std::find(cf2.begin(), cf2.end(), target) != cf2.end()) {
+//     colorflow = "cf2";
+//   }
+//   return colorflow;
+// }
+
+std::string findColorflow(const std::vector<std::vector<std::string>>& cfVectors, const std::vector<std::string>& particles, int targetRow) {
+    std::string colorflow = "";
+    std::string target = particles[targetRow];
+
+    for (size_t i = 0; i < cfVectors.size(); ++i) {
+        const std::vector<std::string>& cf = cfVectors[i];
+        if (std::find(cf.begin(), cf.end(), target) != cf.end()) {
+            colorflow = "cf" + std::to_string(i + 1); // Create the colorflow label dynamically
+            break;
+        }
+    }
+
+    return colorflow;
 }
+
 
 
 int main()
@@ -27,6 +43,9 @@ int main()
     std::vector<std::string> cf1 = {"q1", "g", "Q2"};
     std::vector<std::string> cf2 = {"Q4", "g", "q3"};
 
+    std::vector<std::vector<std::string>> cfVectors = {cf1, cf2};
+
+    
     std::vector<std::string> particles = Particles(in, inter, out);
 
     std::map<std::string, int> particle_index = Particles_index(particles);
@@ -81,9 +100,9 @@ int main()
 	      std::string quark2 = particles[quark2_index];
 	      
 	      // find the color flow of the quark
-	      std::string colorflow1 = findColorflow( cf1, cf2, particles, quark1_index);
-	      std::string colorflow2 = findColorflow( cf1, cf2, particles, quark2_index);
-	      //check if the quarks are in different color flows
+	      std::string colorflow1 = findColorflow( cfVectors, particles, quark1_index);
+	      std::string colorflow2 = findColorflow( cfVectors, particles, quark2_index);
+	      // //check if the quarks are in different color flows
 	      if (colorflow1 != colorflow2) {
 		// add a vertex between the quarks if they are in different color flows
 		A(quark1_index, quark2_index) = -1;
