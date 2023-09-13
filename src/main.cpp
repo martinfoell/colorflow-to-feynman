@@ -34,7 +34,6 @@ int main()
   {
     std::string filename = "../example.txt"; // Replace with your file's name
 
-    // Now, you can work with the data as needed
     std::vector<std::string> in;
     std::vector<std::string> inter;
     std::vector<std::string> out;
@@ -57,7 +56,7 @@ int main()
     cfVectors.push_back(cf2);
     cfVectors.push_back(cf3);
     cfVectors.push_back(cf4);
-
+    
     std::vector<std::string> particles = Particles(in, inter, out);
 
     std::map<std::string, int> particle_index = Particles_index(particles);
@@ -92,3 +91,12 @@ int main()
 
 
 
+    // std::vector<std::string> in = {"q1", "q2"};
+    // std::vector<std::string> inter= {"q7", "g8", "q9"};
+    // std::vector<std::string> out= {"g3", "q4", "q5", "g6"};
+    
+    // std::vector<std::string> cf1 = {"q1", "g8", "q9", "g6"};
+    // std::vector<std::string> cf2 = {"q2", "g8", "q7", "g3"};
+    // std::vector<std::string> cf3 = {"g3", "q4"};
+    // std::vector<std::string> cf4 = {"g6", "q5"};
+    // std::vector<std::vector<std::string>> cfVectors = {cf1, cf2, cf3, cf4};
