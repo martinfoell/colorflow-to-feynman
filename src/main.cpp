@@ -30,9 +30,14 @@ void addParticlesFromFile(std::string filename, std::string vectorname, std::vec
   }
 }
 
-int main()
-  {
-    std::string filename = "../example.txt"; // Replace with your file's name
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
+        return 1; // Return an error code
+    }
+
+    std::string filename = argv[1];
+    // std::string filename = "../example.txt"; // Replace with your file's name
 
     std::vector<std::string> in;
     std::vector<std::string> inter;
@@ -56,6 +61,13 @@ int main()
     cfVectors.push_back(cf2);
     cfVectors.push_back(cf3);
     cfVectors.push_back(cf4);
+    
+    // remove empty vectors from cfVectors
+    cfVectors.erase(std::remove_if(cfVectors.begin(), cfVectors.end(), 
+				   [](const std::vector<std::string>& innerVector) {
+				     return innerVector.empty();
+				   }), 
+		    cfVectors.end());
     
     std::vector<std::string> particles = Particles(in, inter, out);
 

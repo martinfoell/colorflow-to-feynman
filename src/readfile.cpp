@@ -1,6 +1,7 @@
 #include "../include/readfile.hpp"
 
 
+
 // int main() {
 //     std::string filename = "example.txt"; // Replace with your file's name
 //     std::map<std::string, std::vector<std::string>> data = readNamedCommaSeparatedValues(filename);
@@ -28,6 +29,23 @@
 //     return 0;
 // }
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <map>
+#include <algorithm> // for trim functions
+
+// Trim leading and trailing white spaces from a string
+void trim(std::string& str) {
+    str.erase(str.begin(), std::find_if(str.begin(), str.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+    str.erase(std::find_if(str.rbegin(), str.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), str.end());
+}
+
 std::map<std::string, std::vector<std::string>> readNamedCommaSeparatedValues(const std::string& filename) {
     std::map<std::string, std::vector<std::string>> data; // Create a map to store name-value pairs
     std::ifstream inputFile(filename); // Open the file for reading
@@ -40,22 +58,26 @@ std::map<std::string, std::vector<std::string>> readNamedCommaSeparatedValues(co
 
     std::string line;
     while (std::getline(inputFile, line)) {
-        size_t colonPos = line.find(':'); // Find the position of the colon
-        if (colonPos != std::string::npos) {
-            // Extract the name (before the colon)
-            std::string name = line.substr(0, colonPos);
-            
-            // Extract the part of the line after the colon
-            std::string partAfterColon = line.substr(colonPos + 1);
-            
-            // Split the part after the colon using commas as the delimiter
-            std::istringstream iss(partAfterColon);
+        // Find the position of the equal sign '='
+        size_t equalPos = line.find('=');
+        if (equalPos != std::string::npos) {
+            // Extract the name (before the equal sign) and values (after the equal sign)
+            std::string name = line.substr(0, equalPos);
+            std::string partAfterEqual = line.substr(equalPos + 1);
+
+            // Trim leading and trailing spaces from name and values
+            trim(name);
+            trim(partAfterEqual);
+
+            // Split the part after the equal sign using commas as the delimiter
+            std::istringstream iss(partAfterEqual);
             std::string element;
             std::vector<std::string> values;
             while (std::getline(iss, element, ',')) {
+                trim(element); // Trim spaces from each element
                 values.push_back(element); // Add each element to the vector
             }
-            
+
             // Associate the name with the vector of values
             data[name] = values;
         }
@@ -64,5 +86,3 @@ std::map<std::string, std::vector<std::string>> readNamedCommaSeparatedValues(co
     inputFile.close(); // Close the file
     return data;
 }
-
-

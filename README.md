@@ -24,5 +24,12 @@ cd bin
 ```
 
 # Example
-
+The input format for the color flows to the program are stored in a .txt file. The input example.txt is given below and corresponds to the example in the picture above.
+```
+in = q1, Q2
+inter = g
+out = q3, Q4
+cf1 = q1, g, Q2
+cf2 = Q4, g, q3
+```
 

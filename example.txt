@@ -1,24 +1,10 @@
-in:q1,q2
-inter:q7,g8,q9
-out:g3,q4,q5,g6
-cf1:q1,g8,q9,g6
-cf2:q2,g8,q7,g3
-cf3:g3,q4
-cf4:g6,q5
-    // std::vector<std::string> in = {"q1", "q2"};
-    // std::vector<std::string> inter= {"q7", "g8", "q9"};
-    // std::vector<std::string> out= {"g3", "q4", "q5", "g6"};
-
-
-    // std::vector<std::string> in = {"q1", "q2"};
-    // std::vector<std::string> inter= {"q7", "g8", "q9"};
-    // std::vector<std::string> out= {"g3", "q4", "q5", "g6"};
-    
-    // std::vector<std::string> cf1 = {"q1", "g8", "q9", "g6"};
-    // std::vector<std::string> cf2 = {"q2", "g8", "q7", "g3"};
-    // std::vector<std::string> cf3 = {"g3", "q4"};
-    // std::vector<std::string> cf4 = {"g6", "q5"};
-    // std::vector<std::vector<std::string>> cfVectors = {cf1, cf2, cf3, cf4};
+in = q1,q2
+inter =  q7,g8,q9
+out = g3,q4,q5,g6
+cf1 = q1,g8,q9,g6
+cf2 = q2,g8,q7,g3
+cf3 = g3,q4
+cf4 = g6,q5
 
 
 
