@@ -13,7 +13,7 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 # Executable name
-TARGET = $(BIN_DIR)/my_program
+TARGET = $(BIN_DIR)/main
 
 # Include directories
 INC_FLAGS = -I$(INC_DIR)
