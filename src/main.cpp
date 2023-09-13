@@ -1,29 +1,18 @@
 #include <iostream>
 #include <armadillo>
+#include <vector>
+#include <string>
+#include "../include/matrix.hpp"
+#include "../include/particles.hpp"
 
-using namespace std;
-using namespace arma;
 
-// Function to find triangles in a graph represented by an Armadillo imat
-void findTriangles(const arma::imat& adjacencyMatrix) {
-    int numNodes = adjacencyMatrix.n_rows;
-
-    // Loop through each node in the graph
-    for (int i = 0; i < numNodes; i++) {
-        for (int j = i + 1; j < numNodes; j++) {
-            if (adjacencyMatrix(i, j)) {  // If there is an edge between nodes i and j
-                // Check for a third node k that forms a triangle with nodes i and j
-                for (int k = j + 1; k < numNodes; k++) {
-                    if (adjacencyMatrix(i, k) && adjacencyMatrix(j, k)) {
-                        // Nodes i, j, and k form a triangle
-                        std::cout << "Triangle found: " << i << " " << j << " " << k << std::endl;
-                    }
-                }
-            }
-        }
-    }
-}
-
+// std::map<std::string, int> Particles_index(std::vector<std::string> particles) {
+//   std::map<std::string, int> particle_index;
+//   for (size_t i = 0; i < particles.size(); ++i) {
+//     particle_index[particles[i]] = i;
+//   }
+//   return particle_index;
+// }
 
 int main()
   {
@@ -33,20 +22,20 @@ int main()
     
     int n = in.size()+inter.size()+out.size();    
     std::cout << "n = " << n << std::endl;
+    
     // Create a new vector to store the concatenated strings
     std::vector<std::string> cf1 = {"q1", "g", "Q2"};
     std::vector<std::string> cf2 = {"Q4", "g", "q3"};
 
-    std::vector<std::string> particles;
-    particles.reserve( in.size() + inter.size() + out.size() ); // preallocate memory
-    particles.insert( particles.end(), in.begin(), in.end() );
-    particles.insert( particles.end(), inter.begin(), inter.end() );
-    particles.insert( particles.end(), out.begin(), out.end() );
 
-    std::map<std::string, int> particle_index;
-    for (size_t i = 0; i < particles.size(); ++i) {
-      particle_index[particles[i]] = i;
-    }
+    std::vector<std::string> particles = Particles(in, inter, out);
+
+    std::map<std::string, int> particle_index = Particles_index(particles);
+    
+    // std::map<std::string, int> particle_index;
+    // for (size_t i = 0; i < particles.size(); ++i) {
+    //   particle_index[particles[i]] = i;
+    // }
 
     // std::vector<std::string> quarks;
 
@@ -77,7 +66,7 @@ int main()
     
     // Print the first characters
     std::cout << "First characters:" << std::endl;
-    for (string c : quarks) {
+    for (std::string c : quarks) {
         std::cout << c << " ";
 	// std::cout << particle_index[c] << " ";
     }
@@ -132,11 +121,11 @@ int main()
 	  for (size_t col = 0; col < numCols; ++col) {
 	    if (A(col, targetCol) == -1) {
 	      std::cout << col << std::endl;
-	      string target = particles[targetRow];
-	      string target2 = particles[col];
+	      std::string target = particles[targetRow];
+	      std::string target2 = particles[col];
 	      
-	      string key1;
-	      string key2;
+	      std::string key1;
+	      std::string key2;
 	      
 	      if (std::find(cf1.begin(), cf1.end(), target) != cf1.end()) {
 		key1 = "cf1";
@@ -169,7 +158,7 @@ int main()
     arma::imat absA = arma::abs(A);
     std::cout << absA << std::endl;
 
-    for (string i: particles)
+    for (std::string i: particles)
       std::cout << i << ' ';
     std::cout <<  std::endl;
     findTriangles(absA);
