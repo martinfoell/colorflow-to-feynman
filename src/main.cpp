@@ -6,6 +6,7 @@
 #include "../include/particles.hpp"
 #include "../include/readfile.hpp"
 #include <cstring>
+
 void printVector(std::vector<std::string> v) {
   std::string result;
   for (size_t i = 0; i < v.size(); ++i) {
